@@ -1,3 +1,32 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+header {
+    width: 100vw;
+    display: flex;
+    border: 1px solid black;
+    justify-content: center;
+    align-items: center;
+}
+
 h1 {
     color: red;
+}
+
+.add-project {
+    border-radius: 10px;
+    border: none;
+    transition: ease 1s background;
+    padding: 0.8em;
+    margin-top: 1em;
+    margin-left: 1em;
+}
+
+.add-project:hover {
+    background: red;
+    cursor: pointer;
 }
