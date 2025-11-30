@@ -1,3 +1,5 @@
+/* reset */
+
 * {
     margin: 0;
     padding: 0;
@@ -5,28 +7,103 @@
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
+body {
+   display: flex;
+   flex-direction: column;
+}
+
+.main-content {
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+}
+
+/* header stuff */
+
 header {
     width: 100vw;
+    height: 5vh;
     display: flex;
     border: 1px solid black;
     justify-content: center;
     align-items: center;
+    background-color: rgba(0, 255, 255, 0.999);
 }
 
-h1 {
-    color: red;
+header h1 {
+    color: rgb(255, 255, 255);
+}
+
+/* sidebar project stuff */
+
+.project-section {
+    width: 20vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.772);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.side-header-container {
+    width: 100%;
+    padding: 10px;
+    border-bottom: 1px solid white;
+}
+
+.project-section h1 {
+    text-align: center;
+    color: white;
+}
+
+.project-section p {
+    padding: 1em;
+}
+
+.project-container {
+    border-bottom: 1px solid white;
+    width: 100%;
+    transition: 0.5s ease background;
+}
+
+.project-container:hover {
+    cursor: pointer;
+    background: rgb(0, 0, 0);
+}
+
+.project-container p {
+    color: white;
 }
 
 .add-project {
     border-radius: 10px;
     border: none;
-    transition: ease 1s background;
+    transition: ease 0.7s border-radius, ease-in-out transform 0.3s;
     padding: 0.8em;
     margin-top: 1em;
     margin-left: 1em;
 }
 
 .add-project:hover {
-    background: red;
     cursor: pointer;
+    border-radius: 0;
+    transform: scale(1.1);
 }
+
+/* main content */
+
+main {
+    background: rgba(0, 0, 0, 0.105);
+    width: 100vw;
+}
+
+.todo-item {
+    border: 2px solid black;
+    border-radius: 15px;
+    width: 25%;
+    height: auto;
+    padding: 1em;
+    margin: 1em;
+}
+
