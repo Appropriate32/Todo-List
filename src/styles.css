@@ -22,16 +22,22 @@ body {
 
 header {
     width: 100vw;
-    height: 5vh;
+    height: 70px;
+    background-color: #1a1a1a;
     display: flex;
     border: 1px solid black;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 255, 255, 0.999);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-bottom: 1px solid #333;
 }
 
 header h1 {
-    color: rgb(255, 255, 255);
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
 /* sidebar project stuff */
