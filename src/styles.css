@@ -108,5 +108,11 @@ main {
     height: auto;
     padding: 1em;
     margin: 1em;
+    transition: 0.2s ease transform, 0.2s ease background;
+}
+
+.todo-item:hover {
+    transform: scale(1.03);
+    background: rgba(0, 0, 0, 0.189);
 }
 
