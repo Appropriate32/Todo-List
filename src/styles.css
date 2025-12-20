@@ -112,7 +112,7 @@ main {
     background: rgba(0, 0, 0, 0.105);
     width: 100vw;
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-rows: repeat(4, 1fr);
     grid-template-columns:repeat(3, 1fr);
 }
 
