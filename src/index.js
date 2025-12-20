@@ -5,13 +5,25 @@ class DomStuff {
         this.projectSection = document.querySelector(projectSectionSelector);
         this.addButton = document.querySelector(addButtonSelector);
         this.buttons = document.querySelector(buttonsSelector);
+        
+        
         this.handleAddProject = this.handleAddProject.bind(this);
+        this.handleProjectClick = this.handleProjectClick.bind(this);
+        
         this.init();
     }
 
     init() {
         if (this.addButton) {
             this.addButton.addEventListener("click", this.handleAddProject);
+        }
+
+        if (this.projectSection) {
+            this.projectSection.addEventListener("click", this.handleProjectClick)
+        
+            // Set first project to be active by default on load
+            const firstProject = this.projectSection.querySelector(".project-container");
+            if (firstProject) firstProject.classList.add("active");
         }
     }
 
@@ -25,9 +37,37 @@ class DomStuff {
         this.projectSection.insertBefore(projectItem, this.buttons);
     }
 
+    handleProjectClick(e) {
+        const projectClicked = e.target.closest(".project-container");
+
+        // Safety check: ensure project was actually clicked
+        if (!projectClicked) return;
+
+        // Check if project is already active
+        if (projectClicked.classList.contains("active")) {
+            return;
+        }
+
+        // Remove active class from all other projects
+        const allProjects = this.projectSection.querySelectorAll(".project-container");
+        allProjects.forEach(project => {
+            project.classList.remove("active");
+        });
+
+        // Add 'active' class to newly clicked project
+        projectClicked.classList.add("active");
+
+        const mainContent = document.querySelector("main");
+        mainContent.innerHTML = "";
+        
+    } 
+
     destroy() {
         if (this.addButton) {
             this.addButton.removeEventListener("click", this.handleAddProject);
+        }
+        if (this.projectSection) {
+            this.projectSection.removeEventListener("click", this.handleProjectClick);
         }
     }
 }
