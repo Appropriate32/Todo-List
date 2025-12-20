@@ -1,5 +1,21 @@
 import "./styles.css";
 
+let myProjects = [
+    {
+        id : 1,
+        title: "Default Project",
+        todos: [
+            {title: "Buy Milk", due: "Jan 10", priority: "Low"},
+            {title: "Walk Dog", due: "Jan 11", priority: "High"}
+        ]
+    },
+    {
+        id : 2,
+        title: "Work Project",
+        todos: []
+    }
+]
+
 class DomStuff {
     constructor({ projectSectionSelector = ".project-section", addButtonSelector = ".add-project", buttonsSelector = ".buttons" } = {}) {
         this.projectSection = document.querySelector(projectSectionSelector);
