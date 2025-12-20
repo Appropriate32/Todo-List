@@ -72,8 +72,17 @@ header h1 {
     background: rgb(0, 0, 0);
 }
 
+.project-container.active {
+    background: rgb(50, 50, 50); /* A distinct background color */
+    border-right: 5px solid cyan; 
+}
+
 .project-container p {
     color: white;
+}
+
+.project-container, .buttons {
+    padding-left: 0.8em;
 }
 
 .add-project {
@@ -113,6 +122,6 @@ main {
 
 .todo-item:hover {
     transform: scale(1.03);
-    background: rgba(0, 0, 0, 0.189);
+    background: rgba(0, 0, 0, 0.064);
 }
 
