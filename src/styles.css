@@ -10,10 +10,12 @@
 body {
    display: flex;
    flex-direction: column;
+   height: 100vh;
 }
 
 .main-content {
     width: 100vw;
+    height: 100%;
     display: flex;
     flex-direction: row;
 }
@@ -25,6 +27,7 @@ header {
     height: 70px;
     background-color: #1a1a1a;
     display: flex;
+    padding: 6px;
     border: 1px solid black;
     justify-content: center;
     align-items: center;
