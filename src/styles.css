@@ -127,6 +127,29 @@ main {
     padding: 1em;
     margin: 1em;
     transition: 0.2s ease transform, 0.2s ease background;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.todo-buttons-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.todo-buttons-container button {
+    border-radius: 10px;
+    padding: 0.4em;
+    border: none;
+    font-size: 1rem;
+}
+
+.todo-buttons-container button:hover {
+    cursor: pointer;
+}
+
+.remove-todo {
+    background: rgba(255, 0, 0, 0.651);
 }
 
 .todo-item:hover {

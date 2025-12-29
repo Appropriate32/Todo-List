@@ -10,11 +10,7 @@ class ProjectManager {
                 title: "Default Project",
                 todos: []
             },
-            {
-                id : 2,
-                title: "Work Project",
-                todos: []
-            }
+            
         ];
     }
 
@@ -66,21 +62,9 @@ class DomStuff {
         }
     }
 
-    renderNewToDo() {
-        const data = this.ProjectManager.addTodoToProject(1, "New Task", "Jan 10", "Low", "Desc");
-
-        const todoItem = document.createElement("div");
-
-        todoItem.classList.add("todo-item");
-        
-        todoItem.innerHTML = `
-            <h2 class="todo-heading">${data.title}</h2>
-            <p class="due">Due: ${data.due}</p>
-            <p class="priority">Priority: ${data.priority}</p>
-            <p class="description">${data.description}</p>
-        `;
-
-        this.mainContent.prepend(todoItem);
+    renderNewToDo(projectId = 1) {
+        const data = this.ProjectManager.addTodoToProject(projectId, "New Task", "Jan 10", "Low", "Desc");
+        this.createTodoElement(data);
     }
 
     handleAddProject() {
@@ -110,13 +94,43 @@ class DomStuff {
 
         // Add 'active' class to newly clicked project
         projectClicked.classList.add("active");
-
-        this.mainContent.innerHTML = '<button class="add-todo">Add Todo</button>';
         
-        // Re-select button because innerHTML was wiped
+        const projectId = Number(projectClicked.dataset.id) || 1;
+
+        this.refreshMainContent(projectId);
+    }
+    
+    refreshMainContent(projectId) {
+        this.mainContent.innerHTML = '<button class="add-todo">Add Todo</button>';
+
         this.todoButton = document.querySelector(".add-todo");
-        this.todoButton.addEventListener("click", () => this.renderNewToDo());
-    } 
+
+        this.todoButton.addEventListener("click", () => this.renderNewToDo(projectId));
+
+        const project = this.ProjectManager.projects.find(p => p.id === projectId);
+
+        if (project && project.todos) {
+            project.todos.forEach(todo => {
+                this.createTodoElement(todo);
+            })
+        }
+    }
+
+    createTodoElement(data) {
+        const todoItem = document.createElement("div");
+        todoItem.classList.add("todo-item");
+        todoItem.innerHTML = `
+            <h2 class="todo-heading">${data.title}</h2>
+            <p class="due">Due: ${data.due}</p>
+            <p class="priority">Priority: ${data.priority}</p>
+            <p class="description">${data.description}</p>
+            <div class="todo-buttons-container">
+                <button class="edit-todo">Edit</button>
+                <button class="remove-todo">Remove</button>
+            </div>
+        `;
+        this.mainContent.prepend(todoItem);
+    }
 
     destroy() {
         if (this.addButton) {
