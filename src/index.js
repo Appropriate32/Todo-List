@@ -58,6 +58,8 @@ class DomStuff {
         this.addProjectBtn = document.querySelector(".add-project");
         this.buttonsContainer = document.querySelector(".buttons");
         this.removeTodo = document.querySelector(".remove-todo");
+        this.doneButton = document.querySelector(".done");
+        this.xButton = document.querySelector(".x");
 
         this.init();
     }
@@ -70,6 +72,10 @@ class DomStuff {
             if (e.target.classList.contains("remove-todo")) {
                 this.handleRemoveTodo(e);
             }
+
+            if (e.target.classList.contains("edit-todo")) {
+                this.disableHidden();
+            }
         });
 
         // Project Listeners
@@ -80,7 +86,16 @@ class DomStuff {
         if (this.projectSection) {
             this.projectSection.addEventListener("click", (e) => this.handleProjectClick(e));
         }
+
+        if (this.doneButton) {
+            this.doneButton.addEventListener("click", () => this.enableHidden());
+        }
+
+        if (this.xButton) {
+            this.xButton.addEventListener("click", () => this.enableHidden());
+        }
     }
+
 
     renderNewToDo(projectId = 1, todoId) {
         const data = this.ProjectManager.addTodoToProject(projectId, todoId ,"New Task", "Jan 10", "Low", "Desc");
@@ -165,6 +180,22 @@ class DomStuff {
             </div>
         `;
         this.mainContent.prepend(todoItem);
+    }
+
+    enableHidden() {
+        const blur = document.querySelector(".blur");
+        const editOverlay = document.querySelector(".edit-overlay");
+
+        blur.classList.add("hidden");
+        editOverlay.classList.add("hidden");
+    }
+
+    disableHidden() {
+        const blur = document.querySelector(".blur");
+        const editOverlay = document.querySelector(".edit-overlay");
+
+        blur.classList.remove("hidden");
+        editOverlay.classList.remove("hidden");
     }
 
     destroy() {

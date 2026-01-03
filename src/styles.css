@@ -169,4 +169,91 @@ main {
     cursor: pointer;
 }
 
+.edit-overlay {
+    width: 50%;
+    height: 75%;
+    justify-self: center;
+    align-self: center;
+    padding: 2em;
+    position: absolute;
+    background: white;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 14px;
+}
+
+.edit-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 40%;
+}
+
+.edit-content h1, .input, .done {
+    margin: 0.2em;
+    padding: 5px;
+}
+
+.input {
+    font-size: 1.3rem;
+}
+
+.edit-content h1 {
+    font-size: 2.6rem;
+}
+
+.done {
+    border-radius: 20px;
+    border: none;
+    background: rgba(128, 128, 128, 0.604);
+    margin-top: 5%;
+    padding: 15px 10px;
+    transition: 0.2s ease background, 0.2s ease color, 0.4s ease transform;
+    font-size: 1.1rem;
+}
+
+.done:hover {
+    background: black;
+    color: white;
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.blur {
+    width: 100vw;
+    height: 105vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
+
+}
+
+.hidden {
+    display: none;
+}
+
+.x {
+    padding: 10px 15px;
+    background: grey;
+    border: none;
+    border-radius: 20px;
+    font-size: 1.2rem;
+    position: absolute;
+    top: 2%;
+    left: 2%;
+    transition: ease 0.2s background, ease 0.2s color, 0.4s ease transform;
+}
+
+.x:hover {
+    background: rgb(0, 0, 0);
+    color: white;
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
 

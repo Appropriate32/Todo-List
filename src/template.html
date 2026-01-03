@@ -9,6 +9,36 @@
     <header>
         <h1>📝 Todo-List</h1>
     </header>
+    <div class="blur"></div>
+    <div class="edit-overlay">
+        <button class="x">x</button>
+        <div class="edit-content">
+            <h1>Edit Todo</h1>
+            <div class="input">
+                <label for="task">Task Name</label>
+                <input type="text" id="task">
+            </div>
+            <div class="input">
+                <label for="due">Due Date</label>
+                <input type="date" id="due">
+            </div>
+            <div class="input">
+                <label for="priority">Priority</label>
+                <select name="priority" id="priority">
+                    <option value="low">Low</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
+            <div class="input">
+                <label for="description">Description</label>
+                <input type="text" id="description">
+            </div>
+            <button type="submit" class="done">Done</button>
+        </div>
+        
+        
+    </div>
     <div class="main-content">
         <div class="project-section">
             <div class="side-header-container">
