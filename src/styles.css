@@ -170,26 +170,31 @@ main {
 }
 
 .edit-overlay {
-    width: 50%;
-    height: 75%;
-    justify-self: center;
-    align-self: center;
+    width: 100vw;
+    height: 100vh;
     padding: 2em;
-    position: absolute;
-    background: white;
+    position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
     border-radius: 14px;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .edit-content {
-    padding: 20px;
+    padding: 2em;
+    background: white;
+    width: 50%;
+    min-width: 300px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+
+    position: relative;
+    
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-top: 40%;
 }
 
 .edit-content h1, .input, .done {
@@ -219,7 +224,7 @@ main {
     background: black;
     color: white;
     cursor: pointer;
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 .blur {
@@ -243,9 +248,10 @@ main {
     border: none;
     border-radius: 20px;
     font-size: 1.2rem;
+    color: white;
     position: absolute;
-    top: 2%;
-    left: 2%;
+    top: 5px;
+    left: 5px;
     transition: ease 0.2s background, ease 0.2s color, 0.4s ease transform;
 }
 
