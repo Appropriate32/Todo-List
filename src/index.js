@@ -33,6 +33,12 @@ class ProjectManager {
         return newTodo;
     }
 
+    getTodo(projectId, todoId) {
+        const project = this.projects.find(p => p.id === projectId);
+        if (!project) return null;
+        return project.todos.find(t => t.todoId === todoId);
+    }
+
     editTodo(projectId, todoId, newData) {
         const project = this.projects.find(p => p.id === projectId);
 
@@ -75,6 +81,7 @@ class DomStuff {
         this.removeTodo = document.querySelector(".remove-todo");
         this.doneButton = document.querySelector(".done");
         this.xButton = document.querySelector(".x");
+        
 
         this.init();
     }
@@ -89,7 +96,9 @@ class DomStuff {
             }
 
             if (e.target.classList.contains("edit-todo")) {
-                this.disableHidden();
+                const todoItem = e.target.closest(".todo-item");
+                const todoId = todoItem.getAttribute("data-todo-id");
+                this.openEditModal(todoId);
             }
         });
 
@@ -103,7 +112,7 @@ class DomStuff {
         }
 
         if (this.doneButton) {
-            this.doneButton.addEventListener("click", () => this.enableHidden());
+            this.doneButton.addEventListener("click", (e) => this.handleEditSubmit(e));
         }
 
         if (this.xButton) {
@@ -111,8 +120,50 @@ class DomStuff {
         }
     }
 
+    openEditModal(todoId) {
+        const activeProject = document.querySelector(".project-container.active");
+        if (!activeProject) return;
+        const projectId = Number(activeProject.dataset.id);
 
-    renderNewToDo(projectId = 1, todoId) {
+        const todoData = this.ProjectManager.getTodo(projectId, todoId);
+
+        if (todoData) {
+            document.querySelector("#task").value = todoData.title;
+            document.querySelector("#due").value = todoData.due;
+            document.querySelector("#priority").value = todoData.priority;
+            document.querySelector("#description").value = todoData.description;
+
+            const editOverlay = document.querySelector(".edit-overlay");
+            editOverlay.dataset.editingId = todoId;
+
+            this.disableHidden();
+        }
+    }
+
+    handleEditSubmit(e) {
+        e.preventDefault();
+
+        const activeProject = document.querySelector(".project-container.active");
+        const projectId = Number(activeProject.dataset.id);
+
+        const editOverlay = document.querySelector(".edit-overlay");
+        const todoId = editOverlay.dataset.editingId;
+
+        const newData = {
+            title: document.querySelector("#task").value,
+            due: document.querySelector("#due").value,
+            priority: document.querySelector("#priority").value,
+            description: document.querySelector("#description").value
+        };
+
+        this.ProjectManager.editTodo(projectId, todoId, newData);
+
+        this.refreshMainContent(projectId);
+
+        this.enableHidden();
+    }
+
+    renderNewToDo(projectId = 1, todoId = crypto.randomUUID()) {
         const data = this.ProjectManager.addTodoToProject(projectId, todoId ,"New Task", "Jan 10", "Low", "Desc");
         this.createTodoElement(data);
     }
