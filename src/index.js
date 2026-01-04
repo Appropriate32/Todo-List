@@ -33,6 +33,21 @@ class ProjectManager {
         return newTodo;
     }
 
+    editTodo(projectId, todoId, newData) {
+        const project = this.projects.find(p => p.id === projectId);
+
+        if (project) {
+            const todo = project.todos.find(t => t.todoId === todoId);
+            if (todo) {
+                // Updates the properties with new values
+                todo.title = newData.title;
+                todo.due = newData.due;
+                todo.priority = newData.priority;
+                todo.description = newData.description;
+            }
+        }
+    }
+
     removeTodoFromProject(projectId, todoId) {
         const project = this.projects.find(p => p.id === projectId);
         
