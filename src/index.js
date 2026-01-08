@@ -68,7 +68,10 @@ class ProjectManager {
     }
 }
 
+const maxTodos = 9;
+
 class DomStuff {
+    
     constructor(ProjectManager) {
         this.ProjectManager = ProjectManager;
 
@@ -82,13 +85,20 @@ class DomStuff {
         this.doneButton = document.querySelector(".done");
         this.xButton = document.querySelector(".x");
         
+        
 
         this.init();
     }
 
     init() {
         // Todo Listeners
-        this.todoButton.addEventListener("click", () => this.renderNewToDo());
+        this.todoButton.addEventListener("click", () => {
+            const activeProject = document.querySelector(".project-container.active");
+            const projectId = activeProject ? Number(activeProject.dataset.id) : 1;
+
+            this.safeAddToDo(projectId);
+            
+        });
         
         this.mainContent.addEventListener("click", (e) => {
             if (e.target.classList.contains("remove-todo")) {
@@ -218,7 +228,7 @@ class DomStuff {
 
         this.todoButton = document.querySelector(".add-todo");
 
-        this.todoButton.addEventListener("click", () => this.renderNewToDo(projectId, crypto.randomUUID()));
+        this.todoButton.addEventListener("click", () => this.safeAddToDo(projectId));
 
         const project = this.ProjectManager.projects.find(p => p.id === projectId);
 
@@ -227,6 +237,17 @@ class DomStuff {
                 this.createTodoElement(todo);
             })
         }
+    }
+
+    safeAddToDo(projectId) {
+        const project = this.ProjectManager.projects.find(p => p.id === projectId);
+
+        if (project && project.todos.length >= maxTodos) {
+            alert("Limit reached! You cannot add more than 9 tasks.");
+            return;
+        }
+
+        this.renderNewToDo(projectId, crypto.randomUUID());
     }
 
     createTodoElement(data) {
@@ -264,14 +285,6 @@ class DomStuff {
         editOverlay.classList.remove("hidden");
     }
 
-    destroy() {
-        if (this.addButton) {
-            this.addButton.removeEventListener("click", this.handleAddProject);
-        }
-        if (this.projectSection) {
-            this.projectSection.removeEventListener("click", this.handleProjectClick);
-        }
-    }
 }
 
 const myProjectManager = new ProjectManager();
