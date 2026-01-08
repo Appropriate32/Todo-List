@@ -4,14 +4,25 @@ import "./styles.css";
 
 class ProjectManager {
     constructor() {
-        this.projects = [
-            {
-                id : 1,
-                title: "Default Project",
-                todos: []
-            },
+        const savedProjects = localStorage.getItem("myTodoApp_data");
+
+        if (savedProjects) {
+            this.projects = JSON.parse(savedProjects);
+        } else {
+            this.projects = [
+                {
+                    id : 1,
+                    title: "Default Project",
+                    todos: []
+                },
             
-        ];
+            ];
+        }
+        
+    }
+
+    saveToStorage() {
+        localStorage.setItem("myTodoApp_data", JSON.stringify(this.projects));
     }
 
     addProject(title) {
@@ -21,6 +32,9 @@ class ProjectManager {
             todos: []
         };
         this.projects.push(newProject);
+
+        this.saveToStorage();
+
         return newProject; // Return data object to DOM handler
     }
 
@@ -29,6 +43,7 @@ class ProjectManager {
         const project = this.projects.find(p => p.id === projectId);
         if (project) {
             project.todos.push(newTodo);
+            this.saveToStorage();
         }
         return newTodo;
     }
@@ -50,6 +65,8 @@ class ProjectManager {
                 todo.due = newData.due;
                 todo.priority = newData.priority;
                 todo.description = newData.description;
+
+                this.saveToStorage();
             }
         }
     }
@@ -62,6 +79,7 @@ class ProjectManager {
             
             if (todoIndex !== -1) {
                 project.todos.splice(todoIndex, 1);
+                this.saveToStorage();
             }
             
         }
@@ -85,9 +103,27 @@ class DomStuff {
         this.doneButton = document.querySelector(".done");
         this.xButton = document.querySelector(".x");
         
-        
-
         this.init();
+
+        this.renderInitialPage();
+    }
+
+    renderInitialPage() {
+        this.ProjectManager.projects.forEach(project => {
+            const projectItem = document.createElement("div");
+            projectItem.className = "project-container";
+
+            projectItem.setAttribute("data-id", project.id);
+
+            if (project.id === 1 || project === this.ProjectManager.projects[0]) {
+                projectItem.classList.add("active");
+
+                this.refreshMainContent(project.id);
+            }
+
+            projectItem.innerHTML = `<p>${project.title}</p>`;
+            this.projectSection.insertBefore(projectItem, this.buttonsContainer);
+        })
     }
 
     init() {
