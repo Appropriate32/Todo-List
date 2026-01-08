@@ -18,7 +18,6 @@ class ProjectManager {
             
             ];
         }
-        
     }
 
     saveToStorage() {
@@ -36,6 +35,15 @@ class ProjectManager {
         this.saveToStorage();
 
         return newProject; // Return data object to DOM handler
+    }
+
+    deleteProject(projectId) {
+        const projectIndex = this.projects.findIndex(p => p.id === projectId);
+        if (projectIndex != -1) {
+            this.projects.splice(projectIndex, 1);
+            this.saveToStorage();
+        }
+        
     }
 
     addTodoToProject(projectId, todoId, title, due, priority, description) {
@@ -121,9 +129,12 @@ class DomStuff {
                 this.refreshMainContent(project.id);
             }
 
-            projectItem.innerHTML = `<p>${project.title}</p>`;
+            projectItem.innerHTML = `
+            <p>${project.title}</p>
+            <button class = "delete-project-btn">X</button>
+            `;
             this.projectSection.insertBefore(projectItem, this.buttonsContainer);
-        })
+        });
     }
 
     init() {
@@ -222,16 +233,41 @@ class DomStuff {
         projectItem.className = "project-container";
         
         projectItem.setAttribute("data-id", newProjectData.id);
-        projectItem.innerHTML = `<p>${newProjectData.title}</p>`;
+        projectItem.innerHTML = `
+        <p>${newProjectData.title}</p>
+        <button class = "delete-project-btn">X</button>
+        `;
         
         this.projectSection.insertBefore(projectItem, this.buttonsContainer);
     }
 
     handleProjectClick(e) {
         const projectClicked = e.target.closest(".project-container");
+        const deleteBtnClicked = e.target.closest(".delete-project-btn");
+        
 
-        // Safety check: ensure project was actually clicked or if active
-        if (!projectClicked || projectClicked.classList.contains("active")) return;
+        if (!projectClicked) return;
+
+        const projectId = Number(projectClicked.dataset.id);
+
+        if (deleteBtnClicked) {
+            
+            this.ProjectManager.deleteProject(projectId);
+
+            projectClicked.remove();
+
+            if (projectClicked.classList.contains("active")) {
+                this.refreshMainContent(1);
+
+                const defaultProject = document.querySelector(`[data-id="1"]`);
+                if (defaultProject) defaultProject.classList.add("active");
+            }
+            return;
+        }
+
+        // Safety check: ensure project isn't active
+        if (projectClicked.classList.contains("active")) return;
+       
 
         // Remove active class from all other projects
         const allProjects = this.projectSection.querySelectorAll(".project-container");
@@ -242,7 +278,7 @@ class DomStuff {
         // Add 'active' class to newly clicked project
         projectClicked.classList.add("active");
         
-        const projectId = Number(projectClicked.dataset.id) || 1;
+       
 
         this.refreshMainContent(projectId);
     }

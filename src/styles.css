@@ -74,6 +74,9 @@ header h1 {
     border-bottom: 1px solid white;
     width: 100%;
     transition: 0.5s ease background;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .project-container:hover {
@@ -88,6 +91,20 @@ header h1 {
 
 .project-container p {
     color: white;
+}
+
+.delete-project-btn {
+    border: none;
+    color: red;
+    background: none;
+    font-size: 1.2rem;
+    padding: 5px;
+    transition: ease 0.2s transform;
+}
+
+.delete-project-btn:hover {
+    transform: scale(1.4);
+    cursor: pointer;
 }
 
 .project-container, .buttons {
